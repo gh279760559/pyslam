@@ -12,9 +12,6 @@
 print_blue '================================================'
 print_blue "Configuring and installing system packages ..."
 
-
-install_package rsync 
-
 # N.B.: python3 is required!
 
 # system packages 

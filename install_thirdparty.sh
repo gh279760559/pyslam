@@ -18,12 +18,6 @@ STARTING_DIR=`pwd`  # this should be the main folder directory of the repo
 # N.B.: this script requires that you have first run:
 #./install_basic.sh 
 # ====================================================
-if [[ -z "${USE_PYSLAM_ENV}" ]]; then
-    USE_PYSLAM_ENV=0
-fi
-if [ $USE_PYSLAM_ENV -eq 1 ]; then
-    . pyenv-activate.sh
-fi  
 
 # ====================================================
 # check if we have external options
@@ -39,17 +33,8 @@ if [[ -n "$WITH_PYTHON_INTERP_CHECK" ]]; then
 fi
 # ====================================================
 
-CURRENT_USED_PYENV=$(get_virtualenv_name)
-print_blue "currently used pyenv: $CURRENT_USED_PYENV"
 
-print_blue "=================================================================="
-print_blue "Configuring and building thirdparty/orbslam2_features ..."
-cd thirdparty/orbslam2_features
-. build.sh $EXTERNAL_OPTION
-cd $STARTING_DIR
-
-
-print_blue '================================================'
+echo '================================================'
 print_blue "Configuring and building thirdparty/Pangolin ..."
 
 make_dir thirdparty
@@ -59,9 +44,7 @@ cd thirdparty
 if [ $INSTALL_PANGOLIN_ORIGINAL -eq 1 ] ; then
     # N.B.: pay attention this will generate a module 'pypangolin' ( it does not have the methods dcam.SetBounds(...) and pangolin.DrawPoints(points, colors)  )
     if [ ! -d pangolin ]; then
-        if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-            sudo apt-get install -y libglew-dev
-        fi     
+        sudo apt-get install -y libglew-dev
         git clone https://github.com/stevenlovegrove/Pangolin.git pangolin
         cd pangolin
         git submodule init && git submodule update
@@ -79,22 +62,17 @@ if [ $INSTALL_PANGOLIN_ORIGINAL -eq 1 ] ; then
 else
     # N.B.: pay attention this will generate a module 'pangolin' 
     if [ ! -d pangolin ]; then
-        if [[ "$OSTYPE" == "linux-gnu"* ]]; then    
-            sudo apt-get install -y libglew-dev
-            git clone https://github.com/uoip/pangolin.git
-            cd pangolin
-            PANGOLIN_UOIP_REVISION=3ac794a
-            git checkout $PANGOLIN_UOIP_REVISION
-            cd ..      
-            # copy local changes 
-            rsync ./pangolin_changes/python_CMakeLists.txt ./pangolin/python/CMakeLists.txt             
-        fi 
-        if [[ "$OSTYPE" == "darwin"* ]]; then
-            git clone --recursive https://gitlab.com/luigifreda/pypangolin.git pangolin 
-        fi 
+        sudo apt-get install -y libglew-dev
+        git clone https://github.com/uoip/pangolin.git
+        cd pangolin
+        PANGOLIN_UOIP_REVISION=3ac794a
+        git checkout $PANGOLIN_UOIP_REVISION
+        cd ..      
+        # copy local changes 
+        cp ./pangolin_changes/python_CMakeLists.txt ./pangolin/python/CMakeLists.txt 
     fi
     cd pangolin
-    if [ ! -f pangolin.cpython-*.so ]; then   
+    if [ ! -f pangolin.cpython-*-linux-gnu.so ]; then   
         make_dir build   
         cd build
         cmake .. -DBUILD_PANGOLIN_LIBREALSENSE=OFF $EXTERNAL_OPTION # disable realsense 
@@ -111,22 +89,19 @@ print_blue "Configuring and building thirdparty/g2o ..."
 
 cd thirdparty
 if [ ! -d g2opy ]; then
-    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        sudo apt-get install -y libsuitesparse-dev libeigen3-dev
-    fi     
+    sudo apt-get install -y libsuitesparse-dev libeigen3-dev
 	git clone https://github.com/uoip/g2opy.git
     cd g2opy
     G2OPY_REVISION=5587024
     git checkout $G2OPY_REVISION
     cd ..
     # copy local changes 
-    rsync ./g2opy_changes/types_six_dof_expmap.h ./g2opy/python/types/sba/types_six_dof_expmap.h
-    rsync ./g2opy_changes/sparse_optimizer.h ./g2opy/python/core/sparse_optimizer.h   
-    rsync ./g2opy_changes/python_CMakeLists.txt ./g2opy/python/CMakeLists.txt    
-    rsync ./g2opy_changes/eigen_types.h ./g2opy/python/core/eigen_types.h      
+    cp ./g2opy_changes/types_six_dof_expmap.h ./g2opy/python/types/sba/types_six_dof_expmap.h
+    cp ./g2opy_changes/sparse_optimizer.h ./g2opy/python/core/sparse_optimizer.h   
+    cp ./g2opy_changes/python_CMakeLists.txt ./g2opy/python/CMakeLists.txt    
 fi
 cd g2opy
-if [ ! -f lib/g2o.cpython-*.so ]; then  
+if [ ! -f lib/g2o.cpython-*-linux-gnu.so ]; then  
     make_buid_dir
     cd build
     cmake .. $EXTERNAL_OPTION
@@ -136,4 +111,9 @@ if [ ! -f lib/g2o.cpython-*.so ]; then
 fi    
 cd $STARTING_DIR
 
+print_blue "=================================================================="
+print_blue "Configuring and building thirdparty/orbslam2_features ..."
+cd thirdparty/orbslam2_features
+. build.sh $EXTERNAL_OPTION
+cd $STARTING_DIR
 

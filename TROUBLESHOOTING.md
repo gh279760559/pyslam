@@ -2,9 +2,7 @@
 
 This page contains a small collections of issues/errors that may be experienced along with their fixes. 
 
-**FIRST OF ALL**: did you read the main [README](./README.md) page? did you use the provided **INSTALL SCRIPTS**? If not then go back on the [README](./README.md) page, read the few lines in the install section and launch the **REQUIRED** install script. The install scripts were created in order to perform all the required install operations for you and make the install process itself as painless as possible.   
-
-If you work under **Ubuntu 20.04** or **MacOS**, check the specific installation procedures reported in the main [README](./README.md) page. 
+**FIRST OF ALL**: did you read the main [README](README-OLD.md) page? did you use the provided **INSTALL SCRIPTS**? If not then go back on the [README](README-OLD.md) page, read the few lines in the install section and launch the **REQUIRED** install script. The install scripts were created in order to perform all the required install operations for you and make the install process itself as painless as possible.   
 
 
 ### Bad tracking performances
@@ -16,20 +14,25 @@ If you experience bad tracking performances, go in [parameters.py](./parameters.
 
 2) then, if you don't actually see any satisfying improvement with step (1), set `kTrackingWaitForLocalMappingToGetIdle=True`
 
-### SURF error
+### SIFT or SURF error
 
-In order to use [non-free OpenCV features](https://stackoverflow.com/questions/50467696/pycharm-installation-of-non-free-opencv-modules-for-operations-like-sift-surf) (i.e. **SURF**, etc.), you need to install the module `opencv-contrib-python` built with the enabled option `OPENCV_ENABLE_NONFREE`. You can find SURF availalble in `opencv-contrib-python 3.4.2.16`: this can be installed by running
+This is already explained in the main [README](README-OLD.md) file. 
+
+In order to use [non-free OpenCV modules](https://stackoverflow.com/questions/50467696/pycharm-installation-of-non-free-opencv-modules-for-operations-like-sift-surf) (i.e. **SIFT** and **SURF**), you need `opencv-contrib-python`. This package can be installed by running     
+
+~~`$ pip3 install opencv-contrib-python==3.4.0.12`~~
 ```
 $ pip3 uninstall opencv-contrib-python
 $ pip3 install opencv-contrib-python==3.4.2.16
 ```
 
-For a more advanced OpenCV installation procedure, you can take a look [here](https://docs.opencv.org/master/d2/de6/tutorial_py_setup_in_ubuntu.html). 
+For a more advanced OpenCV installation procedure, you can take a look [here](https://www.pyimagesearch.com/opencv-tutorials-resources-guides/). 
+
 How to check your installed OpenCV version:
 ```
 $ python3 -c "import cv2; print(cv2.__version__)"
-```
 
+```
 ### g2o Error
 
 If you run into the following error
@@ -42,7 +45,7 @@ that's because you did not run the script
 ```
 $ ./install_thirdparty.sh   
 ```
-as explained in the main [README](./README.md) file. That's required in order to properly build and install the required thirdparty libs. 
+as explained in the main [README](README-OLD.md) file. That's required in order to properly build and install the required thirdparty libs. 
 
 ### Cannot properly import g2o library or other libs 
 
@@ -51,26 +54,9 @@ If you get an error message like
 import g2o 
 ModuleNotFoundError: No module named 'g2o' error
 ```
-First of all, check if you have a compiled `thirdparty/g2opy/lib/g2o.cpython-*-linux-gnu.so`. If not, Did you use one of the install_all scripts? Depending on your selected working environment (native, conda, python3-venv), you need to launch its companion install_all script in order to actually install all the required libraries (including g2o). Please, read the install instruction in the main [README](./README.md) file. 
+First of all, check if you have a compiled `thirdparty/g2opy/lib/g2o.cpython-*-linux-gnu.so`. If not, Did you use one of the install_all scripts? Depending on your selected working environment (native, conda, python3-venv), you need to launch its companion install_all script in order to actually install all the required libraries (including g2o). Please, read the install instruction in the main [README](README-OLD.md) file. 
 
-On the other hand, if you already have a compiled `thirdparty/g2opy/lib/g2o.cpython-*-linux-gnu.so`, it's very likely you have libraries compiled in a 'mixed' way. Then, try to clean everything with the script `clean.sh`, and follow the installation procedure again (see the main [README](./README.md) file). 
-
-### OrderedSet 
-
-reference https://github.com/luigifreda/pyslam/issues/48 
-
-If you run `main_slam.py` and hit the following error
-```
-File "/home/dam/.local/lib/python3.5/site-packages/ordered_set.py", line 134, in copy
-return self.class(self)
-File "/home/dam/.local/lib/python3.5/site-packages/ordered_set.py", line 69, in init
-self |= iterable
-TypeError: unsupported operand type(s) for |=: 'OrderedSet' and 'OrderedSet'
-``` 
-You can solve such an issue by installing a lower version of OrderedSet
-```
-pip install ordered-set==3.1.1 --force-reinstall
-``` 
+On the other hand, if you already have a compiled `thirdparty/g2opy/lib/g2o.cpython-*-linux-gnu.so`, it's very likely you have libraries compiled in a 'mixed' way. Then, try to clean everything with the script `clean.sh`, and follow the installation procedure again (see the main [README](README-OLD.md) file). 
 
 ### Problems with ROS and OpenCV
 

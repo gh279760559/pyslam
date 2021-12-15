@@ -88,7 +88,7 @@ function set_git_modules() {
 	#print_blue "setting up git submodules"
 	git submodule init -- 
 	git submodule sync --recursive 
-	git submodule update --init --recursive
+	git submodule update --recursive
 }
 
 function update_git_modules() {
@@ -96,18 +96,8 @@ function update_git_modules() {
 }
 
 function pause(){
-    read -s -n 1 -p "Press any key to continue . . ."
-    echo ""
-}
-
-function check_conda(){
-    # check that conda is activated 
-    if ! command -v conda &> /dev/null; then
-        echo "ERROR: conda could not be found! did you installed/activated conda?"
-        echo 1 
-    else
-        echo 0
-    fi 
+ read -s -n 1 -p "Press any key to continue . . ."
+ echo ""
 }
  
 # ====================================================

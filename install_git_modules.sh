@@ -54,15 +54,13 @@ print_blue '================================================'
 print_blue "Checking and downloading lfnet models ..."
 cd thirdparty
 # copy local changes 
-rsync ./lfnet_changes/inference.py ./lfnet/inference.py
+cp ./lfnet_changes/inference.py ./lfnet/inference.py
 # download pretrained model
 cd lfnet 
 touch __init__.py 
 make_dir pretrained 
 if [ ! -d pretrained/lfnet-norotaug ]; then 
-    # link update ref: https://github.com/luigifreda/pyslam/issues/49 
-    #wget https://gfx.uvic.ca/pubs/2018/ono2018lfnet/lfnet-norotaug.tar.gz -O pretrained/lfnet-norotaug.tar.gz
-    wget https://cs.ubc.ca/research/kmyi_data/files/2018/lf-net/lfnet-norotaug.tar.gz -O pretrained/lfnet-norotaug.tar.gz
+    wget https://gfx.uvic.ca/pubs/2018/ono2018lfnet/lfnet-norotaug.tar.gz -O pretrained/lfnet-norotaug.tar.gz
     tar -C pretrained/ -xf pretrained/lfnet-norotaug.tar.gz
 fi 
 cd $STARTING_DIR
@@ -73,7 +71,7 @@ print_blue '================================================'
 print_blue "Setting keynet ..."
 cd thirdparty
 # copy local changes 
-rsync ./keynet_changes/keynet_architecture.py ./keynet/keyNet/model/keynet_architecture.py
+cp ./keynet_changes/keynet_architecture.py ./keynet/keyNet/model/keynet_architecture.py
 cd $STARTING_DIR
 
 

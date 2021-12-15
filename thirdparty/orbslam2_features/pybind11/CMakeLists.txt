@@ -25,6 +25,10 @@ if (CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
   set(PYBIND11_MASTER_PROJECT ON)
 endif()
 
+find_package(PythonInterp 3.6 REQUIRED)
+find_package(PythonLibs 3.6 REQUIRED)
+
+
 option(PYBIND11_INSTALL "Install pybind11 header files?" ${PYBIND11_MASTER_PROJECT})
 option(PYBIND11_TEST    "Build pybind11 test suite?"     ${PYBIND11_MASTER_PROJECT})
 

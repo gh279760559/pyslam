@@ -25,7 +25,7 @@ config.cfg.set_lib('delf')
 import cv2 
 
 from threading import RLock
-from utils_sys import Printer 
+from utils import Printer 
 
 import warnings # to disable tensorflow-numpy warnings: from https://github.com/tensorflow/tensorflow/issues/30427
 warnings.filterwarnings('ignore', category=FutureWarning)

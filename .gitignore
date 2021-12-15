@@ -19,4 +19,8 @@ kf_info.log
 local_mapping.log 
 tum_association_matches.txt 
 
-thirdparty/protoc 
+thirdparty/protoc
+
+venv
+.idea
+__pycache__
